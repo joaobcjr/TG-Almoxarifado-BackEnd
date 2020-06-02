@@ -1,5 +1,5 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { InsertLocalDto, GetLocalDto, UpdateLocalDto } from './Local.dto';
+import { InsertLocalDto, GetLocalDto, UpdateLocalDto } from './local.dto';
 import { Local } from './local.entity';
 import { LocalRepository } from './local.repository';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -19,7 +19,7 @@ export class LocalService {
         const found = await this.localRepository.findOne(id);
 
         if (!found) {
-            throw new NotFoundException(`Task with ID ${id} not found`);
+            throw new NotFoundException(`Local com ID '${id}' não encontrado`);
         }
 
         return found
@@ -38,6 +38,6 @@ export class LocalService {
     async deleteLocal(id: number): Promise<void> {
         const result = await this.localRepository.delete(id);
         if (result.affected === 0)
-            throw new NotFoundException(`Task with ID ${id} not found`);
+            throw new NotFoundException(`Local com ID '${id}' não encontrado`);
     }
 }

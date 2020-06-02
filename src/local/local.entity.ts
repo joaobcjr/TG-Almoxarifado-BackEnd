@@ -5,10 +5,10 @@ export class Local extends BaseEntity {
     @PrimaryGeneratedColumn()
     id_local: number;
 
-    @Column()
+    @Column({ length: 10 })
     corredor: string;
 
-    @Column()
+    @Column({ length: 10 })
     prateleira: string;
 
 }

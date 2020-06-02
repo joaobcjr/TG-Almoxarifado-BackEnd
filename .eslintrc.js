@@ -16,4 +16,7 @@ module.exports = {
     node: true,
     jest: true,
   },
+  rules: {
+    '@typescript-eslint/camelcase': 'off',
+  },
 };

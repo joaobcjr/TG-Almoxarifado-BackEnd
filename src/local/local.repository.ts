@@ -1,6 +1,6 @@
 import { Local } from "./local.entity";
 import { EntityRepository, Repository } from "typeorm";
-import { InsertLocalDto, GetLocalDto, UpdateLocalDto } from "./Local.dto";
+import { InsertLocalDto, GetLocalDto, UpdateLocalDto } from "./local.dto";
 
 @EntityRepository(Local)
 export class LocalRepository extends Repository<Local>{
@@ -21,11 +21,11 @@ export class LocalRepository extends Repository<Local>{
         const query = this.createQueryBuilder('local');
 
         if (corredor) {
-            query.andWhere('UPPER(local.corredor) LIKE (:search)', { search: `%${corredor}%` })
+            query.andWhere('UPPER(local.corredor) LIKE UPPER(:search)', { search: `%${corredor}%` })
         }
 
         if (prateleira) {
-            query.andWhere('UPPER(local.prateleira) LIKE (:search)', { search: `%${prateleira}%` })
+            query.andWhere('UPPER(local.prateleira) LIKE UPPER(:search)', { search: `%${prateleira}%` })
         }
 
         query.orderBy('id_local');
