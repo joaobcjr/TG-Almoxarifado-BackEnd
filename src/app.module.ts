@@ -11,6 +11,7 @@ import { FuncionarioModule } from './funcionario/funcionario.module';
 import { RequisicaoModule } from './requisicao/requisicao.module';
 import { SolicitacaoModule } from './solicitacao/solicitacao.module';
 import { InventarioModule } from './inventario/inventario.module';
+require('dotenv').config()
 
 @Module({
   imports: [
