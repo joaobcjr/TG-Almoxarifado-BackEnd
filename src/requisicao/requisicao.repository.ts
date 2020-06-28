@@ -74,7 +74,6 @@ export class RequisicaoRepository extends Repository<Requisicao> {
     query.addSelect('material.id_material');
     query.addSelect('material.descricao');
     query.addSelect('material.estoque_atual');
-    query.addSelect('material.estoque');
     query.addSelect('funcionario.id_funcionario');
     query.addSelect('funcionario.nome');
 

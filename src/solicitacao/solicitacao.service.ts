@@ -1,5 +1,9 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { InsertSolicitacaoDto, GetSolicitacaoDto } from './solicitacao.dto';
+import {
+  InsertSolicitacaoDto,
+  GetSolicitacaoDto,
+  SolicitacaoVisualizarDto,
+} from './solicitacao.dto';
 import { Solicitacao } from './solicitacao.entity';
 import { SolicitacaoRepository } from './solicitacao.repository';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -41,6 +45,17 @@ export class SolicitacaoService {
   ): Promise<Solicitacao[]> {
     return await this.solicitacaoRepository.getFilteredSolicitacao(
       getSolicitacaoDto,
+    );
+  }
+
+  async visualizarSolicitacao(
+    id: number,
+    solicitacaoVisualizarDto: SolicitacaoVisualizarDto,
+  ): Promise<Solicitacao> {
+    await this.getSolicitacaoById(id);
+    return await this.solicitacaoRepository.visualizarSolicitacao(
+      solicitacaoVisualizarDto,
+      id,
     );
   }
 }

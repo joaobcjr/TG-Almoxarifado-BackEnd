@@ -1,6 +1,10 @@
 import { Solicitacao } from './solicitacao.entity';
 import { EntityRepository, Repository, getRepository } from 'typeorm';
-import { InsertSolicitacaoDto, GetSolicitacaoDto } from './solicitacao.dto';
+import {
+  InsertSolicitacaoDto,
+  GetSolicitacaoDto,
+  SolicitacaoVisualizarDto,
+} from './solicitacao.dto';
 import { Solicitacao_material } from './solicitacao_material/solicitacao_material.entity';
 import { Material } from 'src/material/material.entity';
 
@@ -20,6 +24,7 @@ export class SolicitacaoRepository extends Repository<Solicitacao> {
     const solicitacao = Solicitacao.create({
       id_funcionario: id_funcionario,
       data: dataAtual,
+      visualizado: false,
     });
 
     for (let x = 0; x < materiais.length; x++) {
@@ -81,5 +86,21 @@ export class SolicitacaoRepository extends Repository<Solicitacao> {
     query.orderBy('solicitacao.id_solicitacao');
 
     return await query.getOne();
+  }
+
+  async visualizarSolicitacao(
+    solicitacaoVisualizarDto: SolicitacaoVisualizarDto,
+    id: number,
+  ): Promise<Solicitacao> {
+    const { visualizado } = solicitacaoVisualizarDto;
+    const solicitacao = await this.findOne(id);
+
+    if (!solicitacao.visualizado) {
+      solicitacao.visualizado = visualizado;
+    }
+    console.log(solicitacao);
+    await solicitacao.save();
+
+    return await this.getSolicitacaoById(solicitacao.id_solicitacao);
   }
 }

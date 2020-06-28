@@ -41,4 +41,7 @@ export class Solicitacao extends BaseEntity {
     solicitacao_material => solicitacao_material.solicitacao,
   )
   solicitacao_material: Solicitacao_material[];
+
+  @Column()
+  visualizado: boolean;
 }
