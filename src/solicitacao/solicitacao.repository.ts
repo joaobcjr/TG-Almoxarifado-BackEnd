@@ -44,6 +44,9 @@ export class SolicitacaoRepository extends Repository<Solicitacao> {
     query.addSelect('solicitacao_material.qtde');
     query.addSelect('material.id_material');
     query.addSelect('material.descricao');
+    query.addSelect('material.estoque_minimo');
+    query.addSelect('material.estoque_atual');
+    query.addSelect('material.descricao');
     query.addSelect('funcionario.id_funcionario');
     query.addSelect('funcionario.nome');
 
@@ -64,6 +67,8 @@ export class SolicitacaoRepository extends Repository<Solicitacao> {
     query.addSelect('solicitacao_material.qtde');
     query.addSelect('material.id_material');
     query.addSelect('material.descricao');
+    query.addSelect('material.estoque_minimo');
+    query.addSelect('material.estoque_atual');
     query.addSelect('funcionario.id_funcionario');
     query.addSelect('funcionario.nome');
 

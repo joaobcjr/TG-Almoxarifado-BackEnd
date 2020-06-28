@@ -7,6 +7,8 @@ import {
 } from './inventario.dto';
 import { Inventario_material } from './inventario_material/inventario_material.entity';
 import { Material } from 'src/material/material.entity';
+import { HttpException, ForbiddenException } from '@nestjs/common';
+import { promises } from 'dns';
 
 @EntityRepository(Inventario)
 export class InventarioRepository extends Repository<Inventario> {
@@ -92,9 +94,26 @@ export class InventarioRepository extends Repository<Inventario> {
     const { status } = inventarioStatusDto;
     const inventario = await this.findOne(id);
 
+    //if (inventario.status == Status.Fechado) {
+    //  throw new ForbiddenException(`Inventário ID '${id}' já está fechado`);
+    //}
+
     inventario.status = status;
     await inventario.save();
 
-    return await this.getInventarioById(inventario.id_inventario);
+    const inventarioAtualizado = await this.getInventarioById(
+      inventario.id_inventario,
+    );
+    //Atualiza o estoque
+    if (status == Status.Fechado) {
+      await Promise.all(
+        inventarioAtualizado.inventario_material.map(async element => {
+          element.material.estoque_atual = element.qtde;
+          element.material.save();
+        }),
+      );
+    }
+
+    return inventarioAtualizado;
   }
 }
